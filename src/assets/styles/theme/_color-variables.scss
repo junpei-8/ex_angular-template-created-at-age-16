@@ -1,0 +1,22 @@
+$background: var(--theme-background);
+
+$primary-container:   var(--theme-primary-container);
+$secondary-container: var(--theme-secondary-container);
+$tertiary-container:  var(--theme-tertiary-container);
+
+
+
+$text:      var(--theme-text);
+$text-hint: var(--theme-text-hint);
+$hint:      $text-hint;
+$hint-text: $text-hint;
+
+
+
+$primary: var(--theme-primary);
+$accent:  var(--theme-accent);
+$warn:    var(--theme-warn);
+
+$primary-text-contrast: var(--theme-primary-text-contrast);
+$accent-text-contrast : var(--theme-accent-text-contrast);
+$warn-text-contrast   : var(--theme-warn-text-contrast);

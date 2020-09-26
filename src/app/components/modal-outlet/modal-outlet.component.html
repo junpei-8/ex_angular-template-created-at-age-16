@@ -1,0 +1,2 @@
+<ng-container *ngFor='let component of (di.componentsChanges | async)' [ngComponentOutlet]='component.ref'></ng-container>
+<ng-container *ngFor='let template of (di.templatesChanges | async)' [ngTemplateOutlet]='template.ref'></ng-container>

@@ -1,11 +1,4 @@
-@import '../theme/color-variables';
-@import '../theme/mixins';
-
-@import '../props/z-index';
-@import '../props/font-size';
-@import '../props/media-query';
-@import '../props/style-package';
-@import '../props/animation-variables';
+@import './props';
 
 // Component自身のタグに共通でもたせるstyle
 :host {

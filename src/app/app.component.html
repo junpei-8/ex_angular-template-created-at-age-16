@@ -1,5 +1,26 @@
-<header></header>
+<header mat-header-lite size='md'>
+  <div class='title'>Angular Template</div>
+  <div class='spacer'></div>
+  <nav>
+    <button mat-button-lite [color]='routeKey === "Home" ? "primary" : ""' routerLink='home'>
+      <mat-icon-lite>home</mat-icon-lite> Home
+    </button>
+    <button mat-button-lite [color]='routeKey === "NotFound" ? "primary" : ""' routerLink='not-found'>
+      <mat-icon-lite>block</mat-icon-lite> Not found
+    </button>
+    <button mat-button-lite (click)='modalOutput(temp)'>Output</button>
+    <!-- <button mat-button-lite (click)='modalClose()'>Output</button> -->
+  </nav>
+</header>
 
-<main></main>
+<ng-template #temp>
+  <div>template!!!</div>
+</ng-template>
+
+<main [@routeAnimation]='routeKey'>
+  <router-outlet></router-outlet>
+</main>
+
+<modal-outlet></modal-outlet>
 
 <footer></footer>

@@ -1,0 +1,11 @@
+@import 'component';
+
+:host {
+  header {
+    margin-bottom: 32px;
+    mat-icon-lite { margin-right: 8px; }
+  }
+  footer {
+    height: 100px;
+  }
+}

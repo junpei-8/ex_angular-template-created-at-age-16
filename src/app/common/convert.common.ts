@@ -1,4 +1,4 @@
-export function timeStringToMillisecond(timeString: string): number {
+export function timeStringToMillisecond(timeString: string, defaultReturns: any = NaN): number {
   let condition = parseFloat(timeString.slice(-2, -1));
 
   if (condition) {
@@ -7,6 +7,5 @@ export function timeStringToMillisecond(timeString: string): number {
   } else if ((() => condition = parseFloat(timeString.slice(-3, -2)))() || condition || condition === 0) {
     return parseFloat(timeString.slice(0, -2));
 
-  } else { return NaN; }
+  } else { return defaultReturns; }
 }
-

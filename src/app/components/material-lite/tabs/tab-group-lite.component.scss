@@ -1,0 +1,92 @@
+@import 'props';
+
+
+:host {
+  display: flex;
+
+
+  &:not(.mat-vertical-tabs) {
+    flex-direction: column;
+    .mat-tab-lite-header {
+      flex-direction: row;
+      width: 100%;
+      height: 48px;
+    }
+
+    .mat-ink-bar { height: 2px; }
+  }
+  &.mat-vertical-tabs {
+    flex-direction: row;
+    .mat-tab-lite-header {
+      flex-direction: column;
+      flex: none;
+      width: fit-content;
+      height: 100%;
+    }
+
+    .mat-ink-bar { width: 2px; }
+  }
+
+
+  &:not(.mat-stretch-tabs) {
+    .mat-tab-lite-header {
+      .mat-tab-lite-label { max-width: 160px; }
+    }
+  }
+  &.mat-stretch-tabs {
+    .mat-tab-lite-header {
+      align-items: stretch;
+    }
+  }
+
+
+.mat-tab-lite-header {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  position: relative;
+  user-select: none;
+  @include zero-scrollbar;
+
+
+  .mat-tab-lite-label {
+    @include inline-flex(column, center);
+    text-align: center;
+    position: relative;
+    padding: 0 24px;
+    width: 100%;
+    min-width: 96px;
+    height: 48px;
+    cursor: pointer;
+    color: grey;
+
+    &.disabled {
+      pointer-events: none;
+      // color: $disabled-text
+    }
+
+    span {
+      white-space: nowrap;
+    }
+
+    .mat-tab-lite-overlay {
+      width: 100%; height: 100%;
+      position: absolute;
+      top: 0; left: 0;
+      opacity: 0;
+      &:hover {
+        opacity: 0.08;
+      }
+    }
+  }
+
+  .mat-ink-bar {
+    position: absolute;
+    $timing: map-get($mat-amt-duration, slow) map-get($mat-amt-function, angular);
+    transition: transform $timing, height $timing, width $timing;
+  }
+
+}
+
+
+}

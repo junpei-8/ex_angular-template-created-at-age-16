@@ -1,0 +1,76 @@
+@import 'props';
+
+header[mat-header-lite] {
+  width: 100%;
+  background-color: transparent;
+  position: relative; top: 0;
+  background-color: $primary-container; // <= default
+  @include mat-responsive-padding(x);
+
+  .subheading, .description {
+    opacity: 0.8;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  section {
+    @include flex(row, $ai: center);
+    width: 100%;
+    height: inherit; min-height: inherit;
+  }
+
+  nav {
+    @include flex(row, $ai: center);
+  }
+
+  &:not(.mat-fixed-header-wrapper) {
+    z-index: $z-app-bar;
+    @include mat-elevation($z-app-bar);
+  }
+  .mat-fixed-header-wrapper {
+    z-index: $z-floating-app-bar;
+    @include mat-elevation($z-floating-app-bar);
+
+    section {
+      position: fixed;
+    }
+  }
+}
+
+.mat-lg-header-lite {
+  height: 64px;
+
+  .title {
+    @include responsive-font-size(h3);
+    font-weight: 600;
+  }
+
+  .subheading, .description {
+    @include responsive-font-size(h5);
+  }
+}
+.mat-md-header-lite {
+  height: 56px;
+
+  .title {
+    @include responsive-font-size(h5);
+    font-weight: 500;
+  }
+
+  .subheading, .description {
+    @include responsive-font-size(h5);
+  }
+}
+.mat-sm-header-lite {
+  height: 48px;
+
+  .title {
+    @include responsive-font-size(h4);
+    font-weight: 500;
+  }
+  .subheading, .description {
+    @include responsive-font-size(h6);
+  }
+}

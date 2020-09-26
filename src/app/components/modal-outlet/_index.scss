@@ -1,0 +1,22 @@
+modal-outlet {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity map-get($mat-amt-duration, normal) map-get($mat-amt-function , angular);
+
+  &.content-exists {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  // &.overlay {
+  //   pointer-events: auto;
+  //   opacity: 1;
+  // }
+
+  > * {
+    pointer-events: auto;
+  }
+}

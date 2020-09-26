@@ -1,0 +1,24 @@
+<div class='mat-tab-lite-header'>
+  <ng-container *ngFor='let data of tabsData'>
+    <ng-template let-active='data.index === selectedIndex'>
+      <div> {{ active }} </div>
+    </ng-template>
+    <div class='mat-tab-lite-label' (click)='selectTab(data.index)' [style.color]='data.index === selectedIndex ? activeColor.label : ""'
+      matRippleLite [matRippleColor]='activeColor.ripple'>
+      <span> {{ data.label }} </span>
+      <div *ngIf='!disableHover || disableHover !== ""' [style.background-color]='activeColor.ripple' class='mat-tab-lite-overlay'></div>
+    </div>
+  </ng-container>
+  <div class='mat-ink-bar'></div>
+</div>
+
+
+<div class='mat-tab-lite-body'>
+  <ng-container *ngIf='hasShownPrimary'>
+    <ng-template [ngTemplateOutlet]='primaryTemplate'></ng-template>
+  </ng-container>
+
+  <ng-container *ngIf='!hasShownPrimary'>
+    <ng-template [ngTemplateOutlet]='secondaryTemplate'></ng-template>
+  </ng-container>
+</div>

@@ -1,0 +1,32 @@
+$size: var(--mat-icon-lite-size);
+
+mat-icon-lite {
+  font-family: 'Material Icon' !important;
+  display: inline-block;
+  background-repeat: no-repeat;
+  white-space: nowrap;
+  fill: currentColor;
+
+  width:      $size;
+  height:     $size;
+  font-size:  $size;
+  line-height: 1;
+
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+
+  .mat-button-wrapper &, .mat-button-lite-wrapper & {
+    width: auto !important;
+    height: auto !important;
+  }
+}

@@ -25,7 +25,7 @@ $fs-small:       14px;
 $fs-small-small: 14px;
 
 
-@mixin font-size($font-size-ref, $line-height: false) {
+@mixin responsive-font-size($font-size-ref, $line-height: false) {
   $res: null !default;
   $res-small: null !default;
 

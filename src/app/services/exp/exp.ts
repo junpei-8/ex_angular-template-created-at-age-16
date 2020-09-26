@@ -1,32 +1,33 @@
 import { Observable, Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 
-export declare class ExpService {
-  readonly experiencing: () => void;
-  get state(): boolean;
-  get experiences(): Observable<boolean> | null;
+export interface ExpService {
+  readonly exp: () => void;
+  readonly experiences: Observable<boolean> | null;
+  readonly hasExperienced: boolean;
 }
 
 export function expFactory(): ExpService {
-  let _state: boolean = false;
+  let _hasExperienced: boolean = false;
   let _subject: Subject<boolean> | null = new Subject();
-  let _observable: Observable<boolean> | null = _subject.asObservable();
+  let _observable: Observable<boolean> | null = _subject.asObservable().pipe(first());
 
   return {
-    experiencing(): void {
-      if (_state) { return; }
-      _state = true;
+    exp(): void {
+      if (_hasExperienced) { return; }
+      _hasExperienced = true;
       _observable = null;
 
-      _subject.next(true);
-      _subject.complete();
+      // @ts-ignore: subjectは確実に存在するため
+      _subject.next(true); _subject.unsubscribe();
 
       _subject = null;
     },
-    get state(): boolean {
-      return _state;
-    },
     get experiences(): Observable<boolean> | null {
       return _observable;
+    },
+    get hasExperienced(): boolean {
+      return _hasExperienced;
     }
   };
 }

@@ -3,52 +3,54 @@ import { deepCopy } from '../../common';
 
 
 export interface StoreService<S, A> {
-  readonly stateChanges: Observable<State<S, A>>;
-  readonly state: State<S, A>;
+  readonly storeChanges: Observable<StoreChanges<S, A>>;
+  readonly state: S;
   dispatch(action: Action<A>): void;
 }
-
-export type State<S, AT> = S & {
-  actionType: Action<AT>['type'] | null;
-};
 
 type Action<A extends { [key: string]: any; } | string> = A extends string ?
   { [key in A]: { type: key } }[A]
 :
   { [key in keyof A]: A[key] extends null | undefined ? { type: key } : { type: key, payload: A[key] } }[keyof A];
 
-interface ConstructorStore<S, A> {
+interface StoreConfig<S, A> {
   state: S;
   reducer: (state: S, action: A) => S;
 }
+interface StoreChanges<S, A> {
+  state: S;
+  actionType: Action<A>['type'] | null;
+}
 
 export function storeFactory<S, A>(
-  store: ConstructorStore<S, Action<A>>,
+  storeConfig: StoreConfig<S, Action<A>>,
   subjectType: 'normal' | 'behavior' = 'behavior'
 ): StoreService<S, A> {
-  let _state: State<S, A> = { ...store.state, actionType: null };
+  let _state: S = storeConfig.state;
+  let _lastActionType: Action<A>['type'] | null = null;
+  const _reducer = storeConfig.reducer;
 
-  const _subject: BehaviorSubject<State<S, A>> | Subject<State<S, A>> =
-    (subjectType === 'behavior') ?
-        new BehaviorSubject(deepCopy(_state) as State<S, A>)
-      : new Subject();
 
-  const _reducer = store.reducer;
+  const _subject: BehaviorSubject<StoreChanges<S, A>> =
+    new BehaviorSubject({ state: deepCopy(_state), actionType: null } as StoreChanges<S, A>);
+
 
   return {
-    stateChanges: _subject.asObservable(),
-    get state(): State<S, A> {
-      return deepCopy(_state) as State<S, A>;
-    },
-    dispatch(action: Action<A>): void {
-      const newState = {
-        ..._reducer(_state, action),
-        actionType: action.type
-      };
-      const cloneState = deepCopy(newState) as State<S, A>;
+    storeChanges: _subject.asObservable(),
 
-      _subject.next(cloneState);
+    get state(): S {
+      return deepCopy(_state) as S;
+    },
+
+    dispatch(action: Action<A>): void {
+      if (_lastActionType === action.type) { return; }
+
+      const newState = _reducer(_state, action);
+      const cloneState = deepCopy(newState) as S;
+
+      _subject.next({state: cloneState, actionType: null});
       _state = newState;
+      _lastActionType = action.type;
     },
   };
 }

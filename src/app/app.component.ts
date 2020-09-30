@@ -5,6 +5,7 @@ import { BreakpointObserverService, RouteObserverService, ThemeCssVariablesServi
 import { RouteStore, ROUTE_STORE } from './services/store';
 import { ModalOutletService } from './components/modal-outlet';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -36,9 +37,10 @@ export class AppComponent implements OnInit, DoCheck {
     this._breakpointObserver.platform.subscribe();
     this._breakpointObserver.size.subscribe();
 
-    this.routeStore.stateChanges
-      .subscribe(state => {
-        this.routeKey = state.data.parentKey || state.data.key;
+    this.routeStore.storeChanges
+      .subscribe(store => {
+        const routeData = store.state.data;
+        this.routeKey = routeData.parentKey || routeData.key;
       });
 
     // "User data"をロードしたときを想定したテスト

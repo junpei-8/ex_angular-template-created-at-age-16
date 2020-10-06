@@ -17,22 +17,24 @@ modal-outlet {
     pointer-events: auto;
   }
 
-  .overlay-container {
+  .modal-overlay {
     position: absolute; top: 0;
     pointer-events: none;
     height: 100%; width: 100%;
+    transition: opacity map-get($mat-amt-duration, normal) map-get($mat-amt-function, angular);
     opacity: 0;
     background-color: black;
   }
-  &.overlay {
-    .overlay-container {
+  &.active-overlay {
+    .modal-overlay {
       pointer-events: auto;
       opacity: 0.32;
       z-index: -1;
     }
   }
 
-  > *:not(.overlay-container) {
+  > *:not(.modal-overlay) {
     pointer-events: auto;
+    position: absolute;
   }
 }

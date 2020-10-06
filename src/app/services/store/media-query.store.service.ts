@@ -1,14 +1,14 @@
-import { storeFactory, StoreService } from './store';
+import { Store } from './store';
 import { InjectionToken } from '@angular/core';
 
 
 export type MediaQueryPlatformState = 'pc' | 'mp';
 type PlatformActionType = 'PC' | 'MP';
-export type MediaQueryPlatformStore = StoreService<MediaQueryPlatformState, PlatformActionType>;
+export type MediaQueryPlatformStore = Store<MediaQueryPlatformState, PlatformActionType>;
 export const MEDIA_QUERY_PLATFORM_STORE = new InjectionToken('Store', {
   providedIn: 'root',
-  factory: () => storeFactory<MediaQueryPlatformState, PlatformActionType>({
-    state: 'pc',
+  factory: () => new Store<MediaQueryPlatformState, PlatformActionType>({
+    initialState: 'pc',
     reducer: (state, action) => {
       switch (action.type) {
         case 'PC':
@@ -23,11 +23,11 @@ export const MEDIA_QUERY_PLATFORM_STORE = new InjectionToken('Store', {
 
 export type MediaQuerySizeState = 'medium' | 'small';
 type SizeActionType = 'MEDIUM' | 'SMALL';
-export type MediaQuerySizeStore = StoreService<MediaQuerySizeState, SizeActionType>;
+export type MediaQuerySizeStore = Store<MediaQuerySizeState, SizeActionType>;
 export const MEDIA_QUERY_SIZE_STORE = new InjectionToken('Store', {
   providedIn: 'root',
-  factory: () => storeFactory<MediaQuerySizeState, SizeActionType>({
-    state: 'medium',
+  factory: () => new Store<MediaQuerySizeState, SizeActionType>({
+    initialState: 'medium',
     reducer: (state, action) => {
       switch (action.type) {
         case 'MEDIUM':

@@ -45,7 +45,7 @@ export class RouteObserverService {
         if (pathname !== routeState.pathname) {
           // pathnameだけ変更された場合
 
-          this._routeStore.dispatch({ type: 'CHANGE_PATHNAME', payload: route.data });
+          this._routeStore.dispatch({ type: 'CHANGE_PATHNAME', payload: { pathname, data: route.data } });
           this._updateMeta(route.data);
         } else {
           // fragmentだけ変更された場合

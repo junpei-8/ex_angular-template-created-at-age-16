@@ -1,33 +1,33 @@
 import { InjectionToken } from '@angular/core';
-import { storeFactory, StoreService } from './store';
+import { Store } from './store';
 import { AppRouteData } from '../../app-routing';
 
-export type RouteState = {
+export type RouteStoreState = {
   pathname: string,
   fragment: string | null,
   data: AppRouteData
 };
-interface RouteStoreActionType {
-  'CHANGE_PATHNAME': AppRouteData;
+interface RouteStoreAction {
+  'CHANGE_PATHNAME': { pathname: string, data: AppRouteData };
   'CHANGE_FRAGMENT': string;
 }
-export type RouteStore = StoreService<RouteState, RouteStoreActionType>;
+export type RouteStore = Store<RouteStoreState, RouteStoreAction>;
 export const ROUTE_STORE = new InjectionToken('Store: RouteStore', {
   providedIn: 'root',
-  factory: () => storeFactory<RouteState, RouteStoreActionType>({
-    state: {
+  factory: () => new Store<RouteStoreState, RouteStoreAction>({
+    initialState: {
       pathname: '',
       fragment: null,
-      data: { key: '' }
+      data: { key: [''] }
     },
     reducer: (state, action) => {
       switch (action.type) {
         case 'CHANGE_PATHNAME':
-          return { ...state, pathname: location.pathname, data: action.payload };
+          return { ...state, pathname: action.payload.pathname, data: action.payload.data };
         case 'CHANGE_FRAGMENT':
           return { ...state, fragment: action.payload };
       }
     }
-  }, 'normal')
+  })
 });
 

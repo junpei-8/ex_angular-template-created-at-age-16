@@ -10,6 +10,7 @@ import { ModalOutletComponent } from './components/modal-outlet';
 import { MatHeaderLiteModule } from './components/material-lite/header';
 import { MatButtonLiteModule } from './components/material-lite/button';
 import { MatIconLiteModule } from './components/material-lite/icon';
+import { MatDialogLiteModule } from './components/material-lite/dialog';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MatIconLiteModule } from './components/material-lite/icon';
 
     MatHeaderLiteModule,
     MatIconLiteModule,
-    MatButtonLiteModule
+    MatButtonLiteModule,
+    MatDialogLiteModule
   ],
   providers: [],
   bootstrap: [AppComponent]

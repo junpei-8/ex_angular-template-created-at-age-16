@@ -1,56 +1,68 @@
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { map, skip } from 'rxjs/operators';
 import { deepCopy } from '../../common';
 
-
-export interface StoreService<S, A> {
-  readonly storeChanges: Observable<StoreChanges<S, A>>;
-  readonly state: S;
-  dispatch(action: Action<A>): void;
-}
-
-type Action<A extends { [key: string]: any; } | string> = A extends string ?
+type Action<A extends { [key: string]: any; } | string> =
+  A extends string ?
   { [key in A]: { type: key } }[A]
 :
-  { [key in keyof A]: A[key] extends null | undefined ? { type: key } : { type: key, payload: A[key] } }[keyof A];
+  {
+    [key in keyof A]: A[key] extends null | undefined ?
+      { type: key }
+    : { type: key, payload: A[key] }
+  }[keyof A];
 
-interface StoreConfig<S, A> {
-  state: S;
-  reducer: (state: S, action: A) => S;
+interface StoreConfig<S, _A> {
+  initialState: S;
+  reducer: (state: S, action: Action<_A>) => S;
 }
-interface StoreChanges<S, A> {
+
+interface StoreChanges<S, _A> {
   state: S;
-  actionType: Action<A>['type'] | null;
+  actionType: Action<_A>['type'] | null;
 }
 
-export function storeFactory<S, A>(
-  storeConfig: StoreConfig<S, Action<A>>,
-  subjectType: 'normal' | 'behavior' = 'behavior'
-): StoreService<S, A> {
-  let _state: S = storeConfig.state;
-  let _lastActionType: Action<A>['type'] | null = null;
-  const _reducer = storeConfig.reducer;
+export class Store<S, _A> {
+  private _reducer: (state: S, action: Action<_A>) => S;
+  private _subject: BehaviorSubject<StoreChanges<S, _A>>;
+  private _observable: Observable<StoreChanges<S, _A>>;
 
+  constructor(storeConfig: StoreConfig<S, _A>) {
+    this._reducer = storeConfig.reducer;
 
-  const _subject: BehaviorSubject<StoreChanges<S, A>> =
-    new BehaviorSubject({ state: deepCopy(_state), actionType: null } as StoreChanges<S, A>);
+    this._subject = new BehaviorSubject({
+      state: storeConfig.initialState,
+      actionType: null
+    } as StoreChanges<S, _A>);
 
+    this._observable = this._subject.asObservable();
+  }
 
-  return {
-    storeChanges: _subject.asObservable(),
+  get state(): S {
+    return deepCopy(this._subject.value.state) as S;
+  }
 
-    get state(): S {
-      return deepCopy(_state) as S;
-    },
+  get lastActionType(): Action<_A>['type'] | null {
+    return this._subject.value.actionType;
+  }
 
-    dispatch(action: Action<A>): void {
-      if (_lastActionType === action.type) { return; }
+  storeChanges(nextOnSubscribe?: boolean): Observable<StoreChanges<S, _A>> {
+    if (nextOnSubscribe) {
+      return this._observable.pipe(
+        skip(1),
+        map(store => deepCopy(store) as StoreChanges<S, _A>)
+      );
+    } else {
+      return this._observable.pipe(
+        map(store => deepCopy(store) as StoreChanges<S, _A>)
+      );
+    }
+  }
 
-      const newState = _reducer(_state, action);
-      const cloneState = deepCopy(newState) as S;
-
-      _subject.next({state: cloneState, actionType: null});
-      _state = newState;
-      _lastActionType = action.type;
-    },
-  };
+  dispatch(action: Action<_A>): void {
+    this._subject.next({
+      state: this._reducer(this._subject.value.state, action),
+      actionType: action.type
+    });
+  }
 }

@@ -1,0 +1,21 @@
+@import 'props';
+
+mat-dialog-lite {
+  display: block;
+  background: $background;
+
+  width: fit-content; height: fit-content;
+
+  @include mat-responsive-padding(xy);
+  top: 0; left: 0; right: 0; bottom: 0;
+  margin: auto;
+  border-radius: 4px;
+  backface-visibility: hidden;
+
+  z-index: $z-dialog;
+  @include mat-elevation($z-dialog);
+
+  > * {
+    max-width: 80vw; max-height: 96vh;
+  }
+}

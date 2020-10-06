@@ -8,6 +8,7 @@
     <button mat-button-lite [color]='routeKey === "NotFound" ? "primary" : ""' routerLink='not-found'>
       <mat-icon-lite>block</mat-icon-lite> Not found
     </button>
+    <button mat-button-lite (click)='toggleTheme()'>Toggle theme</button>
     <button mat-button-lite (click)='modalOutput(temp)'>Output</button>
   </nav>
 </header>

@@ -1,5 +1,7 @@
-// angular material の @angular/material/theming/_palette.scss を参考に編成
-export type ThemeCssVariableKeys = [
+import { ThemePaletteContrastType, ThemePaletteType, ThemeTextContrastColor } from './theme';
+
+// angular materialの "@angular/material/theming/_palette.scss" を参考に編成
+type ThemeBasicCssVariableKeys = [
   // background
   'base', 'opposite-base',
   'background', 'primary-container', 'secondary-container', 'tertiary-container', 'disabled-container',
@@ -9,21 +11,21 @@ export type ThemeCssVariableKeys = [
 
   // text
   'text', 'secondary-text', 'hint-text', 'disabled-text',
-
-  // theme palette
-  'primary', 'primary-contrast',
-  'accent',  'accent-contrast',
-  'warn',    'warn-contrast',
-
-  'primary-lighter', 'primary-darker', 'primary-lighter-contrast', 'primary-darker-contrast',
-   'accent-lighter',  'accent-darker',  'accent-lighter-contrast',  'accent-darker-contrast',
-     'warn-lighter',    'warn-darker',    'warn-lighter-contrast',    'warn-darker-contrast',
 ];
+
+
+export type ThemeCssVariableKey = ThemeBasicCssVariableKeys[number] | ThemePaletteType | ThemePaletteContrastType;
+
 export type ThemeCssVariable = {
-  [key in ThemeCssVariableKeys[number]]: string;
+  [key in ThemeCssVariableKey]: string;
+} & {
+  text: ThemeTextContrastColor;
 };
+
 export type MinThemeCssVariable = {
-  [key in ThemeCssVariableKeys[number]]?: string;
+  [key in ThemeCssVariableKey]?: string;
+} & {
+  text: ThemeTextContrastColor;
 };
 
 
@@ -34,6 +36,7 @@ export const MIN_THEME_CSS_VARIABLE = {
   'primary-container': '#fafafa',
   'secondary-container': 'white',
   'disabled-container': 'rgba(0,0,0,.12)',
+  primary: '#673ab7'
 } as const;
 
 
@@ -65,21 +68,7 @@ export const LIGHT_THEME_CSS_VARIABLE: ThemeCssVariable = {
   'primary-contrast': '#fff',
   'accent-contrast': 'rgba(0,0,0,.87)',
   'warn-contrast': '#fff',
-
-  'primary-lighter': '#d1c4c9',
-  'primary-darker': '#512da8',
-  'accent-lighter': '#ffe57f',
-  'accent-darker': '#ffc400',
-  'warn-lighter': '#ffcdd2',
-  'warn-darker': '#d32f2f',
-
-  'primary-lighter-contrast': 'rgba(0,0,0,.87)',
-  'primary-darker-contrast': '#fff',
-  'accent-lighter-contrast': 'rgba(0,0,0,.87)',
-  'accent-darker-contrast': 'rgba(0,0,0,.87)',
-  'warn-lighter-contrast': 'rgba(0,0,0,.87)',
-  'warn-darker-contrast': '#fff'
-};
+} as const;
 
 
 export const DARK_THEME_CSS_VARIABLE: ThemeCssVariable = {
@@ -98,7 +87,7 @@ export const DARK_THEME_CSS_VARIABLE: ThemeCssVariable = {
   scrollbar: 'rgba(255,255,255,.12)',
 
   // text
-  text: 'white',
+  text: '#fff',
   'secondary-text': 'rgba(255,255,255,.7)',
   'hint-text': 'rgba(255,255,255,.5)',
   'disabled-text': 'hsla(0,0%,100%,.3)',
@@ -110,21 +99,7 @@ export const DARK_THEME_CSS_VARIABLE: ThemeCssVariable = {
   'primary-contrast': '#fff',
   'accent-contrast': 'rgba(0,0,0,.87)',
   'warn-contrast': '#fff',
-
-  'primary-lighter': '#4caf50',
-  'primary-darker': '#1b5e20',
-  'accent-lighter': '#ffe57f',
-  'accent-darker': '#ffc400',
-  'warn-lighter': '#ffcdd2',
-  'warn-darker': '#d32f2f',
-
-  'primary-lighter-contrast': 'rgba(0,0,0,.87)',
-  'primary-darker-contrast': '#fff',
-  'accent-lighter-contrast': 'rgba(0,0,0,.87)',
-  'accent-darker-contrast': 'rgba(0,0,0,.87)',
-  'warn-lighter-contrast': 'rgba(0,0,0,.87)',
-  'warn-darker-contrast': '#fff'
-};
+} as const;
 
 
 
@@ -159,19 +134,19 @@ export const XYZ_THEME_CSS_VARIABLE: ThemeCssVariable = {
   'accent-contrast': '',
   'warn-contrast': '',
 
-  'primary-lighter': '',
-  'primary-darker': '',
-  'accent-lighter': '',
-  'accent-darker': '',
-  'warn-lighter': '',
-  'warn-darker': '',
+  // 'primary-lighter': '',
+  // 'primary-darker': '',
+  // 'accent-lighter': '',
+  // 'accent-darker': '',
+  // 'warn-lighter': '',
+  // 'warn-darker': '',
 
-  'primary-lighter-contrast': '',
-  'primary-darker-contrast': '',
-  'accent-lighter-contrast': '',
-  'accent-darker-contrast': '',
-  'warn-lighter-contrast': '',
-  'warn-darker-contrast': '',
+  // 'primary-lighter-contrast': '',
+  // 'primary-darker-contrast': '',
+  // 'accent-lighter-contrast': '',
+  // 'accent-darker-contrast': '',
+  // 'warn-lighter-contrast': '',
+  // 'warn-darker-contrast': '',
 };
 
 ------------------------ */

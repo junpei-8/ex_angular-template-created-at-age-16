@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { IconLiteComponent } from './icon-lite.component';
 
 @NgModule({
-  declarations: [ IconLiteComponent ],
+  declarations: [	IconLiteComponent ],
   exports: [ IconLiteComponent ],
   imports: [],
 })

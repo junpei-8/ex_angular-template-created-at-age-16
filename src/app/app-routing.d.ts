@@ -1,8 +1,7 @@
 import { Route } from '@angular/router';
 
 export declare interface AppRouteData {
-  key: string;
-  parentKey?: string;
+  key: string[];
 
   // Meta Data
   title?: string;

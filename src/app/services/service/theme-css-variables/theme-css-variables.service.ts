@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, NgZone } from '@angular/core';
-import { ThemeType } from '../../../typings';
+import { ThemeType } from './theme';
 import { RENDERER, RendererService } from '../../renderer.service';
 import { MIN_THEME_CSS_VARIABLE, DARK_THEME_CSS_VARIABLE, LIGHT_THEME_CSS_VARIABLE, ThemeCssVariable } from './theme-css-variables.const';
 

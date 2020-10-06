@@ -5,12 +5,12 @@ import { NotFoundComponent } from './views/not-found/not-found.component';
 
 const routes: AppRoutes = [
   {
-    path: 'home', data: { title: 'Home', key: 'Home' },
+    path: 'home', data: { title: 'Home', key: ['Home'] },
     loadChildren: () => import('./views/home/home.module').then(m => m.HomeModule)
   },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
-    path: '**', data: { title: 'Not Found', key: 'NotFound' },
+    path: '**', data: { title: 'Not Found', key: ['NotFound'] },
     component: NotFoundComponent
   }
 ];
